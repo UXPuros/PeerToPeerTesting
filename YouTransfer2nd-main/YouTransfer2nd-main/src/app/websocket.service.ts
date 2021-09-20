@@ -42,7 +42,7 @@ export interface availableFile {
 })
 export class WebsocketService {
 
-  private ws: WebSocket = new WebSocket("ws://77.54.205.151/", ['json']);
+  ws: WebSocket = new WebSocket("ws://77.54.205.151/", ['json']);
   private myId: string = '';
   allFiles: availableFile[] = []
 
@@ -51,7 +51,7 @@ export class WebsocketService {
     this.ws.onmessage = this.receviedMessages.bind(this)
   }
 
-  private send(data:any){
+  send(data:any){
     this.ws.send(JSON.stringify(data))
 
   }

@@ -20,7 +20,9 @@ export class P2PTransfer{
    
 }
 
-
+@Injectable({
+  providedIn:'root'
+})
 
 export class Peer2peerService {
 
@@ -38,8 +40,13 @@ export class Peer2peerService {
   request?:object
 
   myPeer?:RTCPeerConnection
-  constructor( private ws:WebsocketService, private target:string, private from:string ) {
-    // this.ws.onmessage = (message:any) =>{
+
+  target:string=''
+  from:string=''
+
+  constructor(private websock:WebsocketService) {
+
+    // this.websock.ws.onmessage = (message:any) =>{
     //   let parsed = JSON.parse(message.data)
     //   if (parsed.type && parsed.data) {
     //     switch (parsed.type) {
@@ -66,7 +73,7 @@ export class Peer2peerService {
       }
     }
 
-    // this.ws.send(JSON.stringify(this.request))
+    this.websock.send(JSON.stringify(this.request))
   }
 
 
@@ -124,7 +131,7 @@ export class Peer2peerService {
             }
 
             this.myPeer = this.createPeer(this.from)
-            // ws.send(JSON.stringify(request))
+            this.websock.send(JSON.stringify(request))
 
         break;
         case 1:
@@ -141,7 +148,7 @@ export class Peer2peerService {
                 }
             }
 
-            // ws.send(JSON.stringify(request))
+            this.websock.send(JSON.stringify(request))
             break;
 
         case 2:
@@ -158,7 +165,7 @@ export class Peer2peerService {
                 }
             }
 
-            // ws.send(JSON.stringify(request))
+            this.websock.send(JSON.stringify(request))
             break;
 
         case 3:
@@ -169,7 +176,7 @@ export class Peer2peerService {
             this.myPeer?.addIceCandidate(msg.message.data)
             break;
     }
-
-}
+    console.log('minha pera',this.myPeer)
+  }
 }
 
